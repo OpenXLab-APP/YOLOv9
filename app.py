@@ -35,7 +35,7 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
     print("img_path:",img_path)
 
     new_image_path = os.path.basename(img_path)
-    output_path = save_path + new_image_path
+    output_path = save_path + img_path
     
     print(f"Output image saved to {output_path}")
     
@@ -59,7 +59,7 @@ inputs = [
     gr.Slider(minimum=0.0, maximum=1.0, value=0.45, step=0.05, label="IOU Threshold"),
 ]
 
-outputs = gr.Image(label="Output Image")
+outputs = gr.Image(type="filepath",label="Output Image")
 title = "YOLOv9"
 
 demo_app = gr.Interface(
