@@ -1,5 +1,6 @@
 import gradio as gr
 import spaces
+import os
 
 @spaces.GPU
 def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_threshold):
@@ -33,8 +34,11 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
     print("save_path:",save_path)
     print("img_path:",img_path)
 
-    output_path = save_path + img_path
+    new_image_path = os.path.basename(img_path)
+    output_path = save_path + new_image_path
+    
     print(f"Output image saved to {output_path}")
+    
     return output_path
 
 
