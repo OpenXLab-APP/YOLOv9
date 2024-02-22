@@ -28,7 +28,7 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
     results = model(img_path, size=image_size)
 
     # Optionally, show detection bounding boxes on image
-    save_path = 'output/'
+    save_path = 'output'
     results.save(labels=True, save_dir=save_path, exist_ok=True)
     print("save_path:",save_path)
     print("img_path:",img_path)
