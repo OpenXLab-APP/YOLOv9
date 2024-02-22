@@ -28,10 +28,11 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
 
     # Optionally, show detection bounding boxes on image
     save_path = 'output/'
-    results.save(labels=True, save_dir=save_path)
+    results.save(labels=True, save_dir=save_path, exist_ok=True)
     
-
-    return save_path + img_path
+    output_path = save_path + img_path
+    print(f"Output image saved to {output_path}")
+    return output_path
 
 
 inputs = [
@@ -44,9 +45,9 @@ inputs = [
             "yolov9-c.pt",
             "yolov9-e.pt",
         ],
-        value="gelan-e.pt",
+        value="gelan-c.pt",
     ),
-    gr.Slider(minimum=320, maximum=1280, value=1280, step=32, label="Image Size"),
+    gr.Slider(minimum=320, maximum=1280, value=640, step=32, label="Image Size"),
     gr.Slider(minimum=0.0, maximum=1.0, value=0.25, step=0.05, label="Confidence Threshold"),
     gr.Slider(minimum=0.0, maximum=1.0, value=0.45, step=0.05, label="IOU Threshold"),
 ]
