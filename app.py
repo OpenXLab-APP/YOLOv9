@@ -52,7 +52,7 @@ inputs = [
 ]
 
 outputs = gr.Image(type="numpy",label="Output Image")
-title = "YOLOv9"
+title = "YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information"
 
 demo_app = gr.Interface(
     fn=yolov9_inference,
