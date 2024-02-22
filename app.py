@@ -31,7 +31,7 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
     results.save(labels=True, save_dir=save_path)
     
 
-    return save_path + img_path.split("/")[-1]
+    return save_path + img_path
 
 
 inputs = [
