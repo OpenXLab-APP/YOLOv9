@@ -1,13 +1,12 @@
 import gradio as gr
 
 
-def yolov9_inference(model_path, device, conf_threshold, iou_threshold, img_path, size=640):
+def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_threshold):
     """
     Load a YOLOv9 model, configure it, perform inference on an image, and optionally adjust 
     the input size and apply test time augmentation.
     
     :param model_path: Path to the YOLOv9 model file.
-    :param device: Computation device, 'cpu' or 'cuda'.
     :param conf_threshold: Confidence threshold for NMS.
     :param iou_threshold: IoU threshold for NMS.
     :param img_path: Path to the image file.
@@ -18,14 +17,14 @@ def yolov9_inference(model_path, device, conf_threshold, iou_threshold, img_path
     import yolov9
     
     # Load the model
-    model = yolov9.load(model_path, device=device)
+    model = yolov9.load(model_path, device="cpu")
     
     # Set model parameters
     model.conf = conf_threshold
     model.iou = iou_threshold
     
     # Perform inference
-    results = model(img_path, size=size)
+    results = model(img_path, size=image_size)
 
     # Optionally, show detection bounding boxes on image
     save_path = 'output/'
