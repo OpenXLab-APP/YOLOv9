@@ -18,7 +18,7 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
     import yolov9
     
     # Load the model
-    model = yolov9.load(model_path, device="cpu")
+    model = yolov9.load(model_path, device="cuda:0")
     
     # Set model parameters
     model.conf = conf_threshold
