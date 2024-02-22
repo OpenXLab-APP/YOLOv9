@@ -35,7 +35,7 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
 
     output_path = save_path + img_path
     print(f"Output image saved to {output_path}")
-    return output_path
+    return img_path
 
 
 inputs = [
