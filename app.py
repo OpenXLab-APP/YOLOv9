@@ -1,6 +1,7 @@
 import gradio as gr
+import spaces
 
-
+@spaces.GPU
 def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_threshold):
     """
     Load a YOLOv9 model, configure it, perform inference on an image, and optionally adjust 
