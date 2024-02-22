@@ -38,7 +38,7 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
 
 
 inputs = [
-    gr.Image(label="Input Image"),
+    gr.Image(type="filepath", label="Input Image"),
     gr.Dropdown(
         label="Model",
         choices=[
@@ -54,7 +54,7 @@ inputs = [
     gr.Slider(minimum=0.0, maximum=1.0, value=0.45, step=0.05, label="IOU Threshold"),
 ]
 
-outputs = gr.Image(type="filepath", label="Output Image")
+outputs = gr.Image(label="Output Image")
 title = "YOLOv9"
 
 demo_app = gr.Interface(
