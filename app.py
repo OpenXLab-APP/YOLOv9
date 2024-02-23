@@ -47,28 +47,28 @@ def app():
                         "yolov9-c.pt",
                         "yolov9-e.pt",
                     ],
-                    default="gelan-e.pt",
+                    value="gelan-e.pt",
                 )
                 image_size = gr.Slider(
                     label="Image Size",
                     min=320,
                     max=1280,
                     step=32,
-                    default=640,
+                    value=640,
                 )
                 conf_threshold = gr.Slider(
                     label="Confidence Threshold",
                     min=0.1,
                     max=1.0,
                     step=0.1,
-                    default=0.4,
+                    value=0.4,
                 )
                 iou_threshold = gr.Slider(
                     label="IoU Threshold",
                     min=0.1,
                     max=1.0,
                     step=0.1,
-                    default=0.5,
+                    value=0.5,
                 )
                 yolov9_infer = gr.Button(value="Inferince")
 
