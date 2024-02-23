@@ -34,30 +34,77 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
     return output[0]
 
 
-inputs = [
-    gr.Image(type="filepath", label="Input Image"),
-    gr.Dropdown(
-        label="Model",
-        choices=[
-            "gelan-c.pt",
-            "gelan-e.pt",
-            "yolov9-c.pt",
-            "yolov9-e.pt",
-        ],
-        value="gelan-c.pt",
-    ),
-    gr.Slider(minimum=320, maximum=1280, value=640, step=32, label="Image Size"),
-    gr.Slider(minimum=0.0, maximum=1.0, value=0.25, step=0.05, label="Confidence Threshold"),
-    gr.Slider(minimum=0.0, maximum=1.0, value=0.45, step=0.05, label="IOU Threshold"),
-]
+def app():
+    with gr.Blocks():
+        with gr.Row():
+            with gr.Column():
+                img_path = gr.Image(type="filepath", label="Image")
+                model_path = gr.Dropdown(
+                    label="Model",
+                    choices=[
+                        "gelan-c.pt",
+                        "gelan-e.pt",
+                        "yolov9-c.pt",
+                        "yolov9-e.pt",
+                    ],
+                    default="gelan-e.pt",
+                )
+                image_size = gr.Slider(
+                    label="Image Size",
+                    min=320,
+                    max=1280,
+                    step=32,
+                    default=640,
+                )
+                conf_threshold = gr.Slider(
+                    label="Confidence Threshold",
+                    min=0.1,
+                    max=1.0,
+                    step=0.1,
+                    default=0.4,
+                )
+                iou_threshold = gr.Slider(
+                    label="IoU Threshold",
+                    min=0.1,
+                    max=1.0,
+                    step=0.1,
+                    default=0.5,
+                )
+                yolov9_infer = gr.Button(value="Inferince")
 
-outputs = gr.Image(type="numpy",label="Output Image")
-title = "YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information"
+            with gr.Column():
+                output_numpy = gr.Image(type="numpy",label="Output")
 
-demo_app = gr.Interface(
-    fn=yolov9_inference,
-    inputs=inputs,
-    outputs=outputs,
-    title=title,
-)
-demo_app.launch(debug=True)
+        yolov9_inference.click(
+            fn=yolov9_inference,
+            inputs=[
+                img_path,
+                model_path,
+                image_size,
+                conf_threshold,
+                iou_threshold,
+            ],
+            outputs=[output_numpy],
+        )
+
+
+gradio_app = gr.Blocks()
+with gradio_app:
+    gr.HTML(
+        """
+    <h1 style='text-align: center'>
+    YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information
+    </h1>
+    """)
+    gr.HTML(
+        """
+        <h3 style='text-align: center'>
+        Follow me for more!
+        <a href='https://twitter.com/kadirnar_ai' target='_blank'>Twitter</a> | <a href='https://github.com/kadirnar' target='_blank'>Github</a> | <a href='https://www.linkedin.com/in/kadir-nar/' target='_blank'>Linkedin</a>  | <a href='https://www.huggingface.co/kadirnar/' target='_blank'>HuggingFace</a>
+        </h3>
+        """)
+    with gr.Row():
+        with gr.Column():
+            app()
+
+gradio_app.launch(debug=True)
