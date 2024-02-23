@@ -70,7 +70,7 @@ def app():
                     step=0.1,
                     value=0.5,
                 )
-                yolov9_infer = gr.Button(value="Inferince")
+                yolov9_infer = gr.Button(value="Inference")
 
             with gr.Column():
                 output_numpy = gr.Image(type="numpy",label="Output")
