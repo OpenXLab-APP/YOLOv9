@@ -51,22 +51,22 @@ def app():
                 )
                 image_size = gr.Slider(
                     label="Image Size",
-                    min=320,
-                    max=1280,
+                    minimum=320,
+                    maximum=1280,
                     step=32,
                     value=640,
                 )
                 conf_threshold = gr.Slider(
                     label="Confidence Threshold",
-                    min=0.1,
-                    max=1.0,
+                    minimum=0.1,
+                    maximum=1.0,
                     step=0.1,
                     value=0.4,
                 )
                 iou_threshold = gr.Slider(
                     label="IoU Threshold",
-                    min=0.1,
-                    max=1.0,
+                    minimum=0.1,
+                    maximum=1.0,
                     step=0.1,
                     value=0.5,
                 )
