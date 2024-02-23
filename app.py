@@ -75,7 +75,7 @@ def app():
             with gr.Column():
                 output_numpy = gr.Image(type="numpy",label="Output")
 
-        yolov9_inference.click(
+        yolov9_infer.click(
             fn=yolov9_inference,
             inputs=[
                 img_path,
