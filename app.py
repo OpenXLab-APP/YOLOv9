@@ -4,9 +4,23 @@ import os
 from huggingface_hub import hf_hub_download
 
 
-def download_models(model_id):
-    hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./{model_id}")
-    return f"./{model_id}"
+def attempt_download_from_hub(repo_id, hf_token=None):
+    # https://github.com/fcakyon/yolov5-pip/blob/main/yolov5/utils/downloads.py
+    from huggingface_hub import hf_hub_download, list_repo_files
+    from huggingface_hub.utils._errors import RepositoryNotFoundError
+    from huggingface_hub.utils._validators import HFValidationError
+    try:
+        repo_files = list_repo_files(repo_id=repo_id, repo_type='model', token=hf_token)
+        model_file = [f for f in repo_files if f.endswith('.pt')][0]
+        file = hf_hub_download(
+            repo_id=repo_id,
+            filename=model_file,
+            repo_type='model',
+            token=hf_token,
+        )
+        return file
+    except (RepositoryNotFoundError, HFValidationError):
+        return None
 
 
 @spaces.GPU
@@ -26,7 +40,7 @@ def yolov9_inference(img_path, model_id, image_size, conf_threshold, iou_thresho
     import yolov9
     
     # Load the model
-    model_path = download_models(model_id)
+    model_path = attempt_download_from_hub(model_id)
     model = yolov9.load(model_path, device="cuda")
     
     # Set model parameters
@@ -50,10 +64,7 @@ def app():
                 model_path = gr.Dropdown(
                     label="Model",
                     choices=[
-                        "gelan-c.pt",
-                        "gelan-e.pt",
-                        "yolov9-c.pt",
-                        "yolov9-e.pt",
+                        "kadirnar/yolov9-gelan-c",
                     ],
                     value="gelan-e.pt",
                 )
@@ -95,6 +106,29 @@ def app():
             outputs=[output_numpy],
         )
         
+        gr.Examples(
+            examples=[
+                [
+                    "data/zidane.jpg",
+                    "kadirnar/yolov9-gelan-c",
+                    640,
+                    0.4,
+                    0.5,
+                ],
+            ],
+            fn=yolov9_inference,
+            inputs=[
+                img_path,
+                model_path,
+                image_size,
+                conf_threshold,
+                iou_threshold,
+            ],
+            outputs=[output_numpy],
+            cache_examples=True,
+        )
+
+
 gradio_app = gr.Blocks()
 with gradio_app:
     gr.HTML(
