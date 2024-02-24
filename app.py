@@ -4,7 +4,7 @@ from huggingface_hub import hf_hub_download
 
 
 def download_models(model_id):
-    hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./{model_id}")
+    hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./")
     return f"./{model_id}"
 
 
