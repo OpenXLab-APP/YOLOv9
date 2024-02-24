@@ -102,6 +102,13 @@ def app():
                     0.4,
                     0.5,
                 ],
+                [
+                    "data/huggingface.jpg",
+                    "yolov9-c.pt",
+                    640,
+                    0.4,
+                    0.5,
+                ],
             ],
             fn=yolov9_inference,
             inputs=[
