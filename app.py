@@ -95,29 +95,6 @@ def app():
             outputs=[output_numpy],
         )
         
-        gr.Examples(
-            examples=[
-                [
-                    "data/zidane.jpg",
-                    "gelan-e.pt",
-                    640,
-                    0.4,
-                    0.5,
-                ],
-            ],
-            fn=yolov9_inference,
-            inputs=[
-                img_path,
-                model_path,
-                image_size,
-                conf_threshold,
-                iou_threshold,
-            ],
-            outputs=[output_numpy],
-            cache_examples=True,
-        )
-
-
 gradio_app = gr.Blocks()
 with gradio_app:
     gr.HTML(
