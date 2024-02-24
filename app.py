@@ -1,7 +1,7 @@
 import gradio as gr
-import os
-from huggingface_hub import hf_hub_download
 import spaces
+from huggingface_hub import hf_hub_download
+
 
 def download_models(model_id):
     hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./")
@@ -25,7 +25,7 @@ def yolov9_inference(img_path, model_id, image_size, conf_threshold, iou_thresho
     
     # Load the model
     model_path = download_models(model_id)
-    model = yolov9.load(model_path, device="cuda")
+    model = yolov9.load(model_path, device="cpu")
     
     # Set model parameters
     model.conf = conf_threshold
