@@ -3,9 +3,12 @@ import spaces
 import os
 from huggingface_hub import hf_hub_download
 
+
 def download_models(model_id):
     hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./{model_id}")
     return f"./{model_id}"
+
+
 @spaces.GPU
 def yolov9_inference(img_path, model_id, image_size, conf_threshold, iou_threshold):
     """
@@ -90,6 +93,27 @@ def app():
                 iou_threshold,
             ],
             outputs=[output_numpy],
+        )
+        
+        gr.Examples(
+            examples=[
+                [
+                    "gelan-e.pt",
+                    640,
+                    0.4,
+                    0.5,
+                ],
+            ],
+            fn=yolov9_inference,
+            inputs=[
+                img_path,
+                model_path,
+                image_size,
+                conf_threshold,
+                iou_threshold,
+            ],
+            outputs=[output_numpy],
+            cache_examples=True,
         )
 
 
