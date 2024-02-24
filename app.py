@@ -1,9 +1,13 @@
 import gradio as gr
 import spaces
 import os
+from huggingface_hub import hf_hub_download
 
+def download_models(model_id):
+    hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./{model_id}")
+    return f"./{model_id}"
 @spaces.GPU
-def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_threshold):
+def yolov9_inference(img_path, model_id, image_size, conf_threshold, iou_threshold):
     """
     Load a YOLOv9 model, configure it, perform inference on an image, and optionally adjust 
     the input size and apply test time augmentation.
@@ -19,7 +23,8 @@ def yolov9_inference(img_path, model_path,image_size, conf_threshold, iou_thresh
     import yolov9
     
     # Load the model
-    model = yolov9.load(model_path, device="cuda:0")
+    model_path = download_models(model_id)
+    model = yolov9.load(model_path, device="cuda")
     
     # Set model parameters
     model.conf = conf_threshold
