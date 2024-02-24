@@ -1,13 +1,13 @@
 import gradio as gr
 import os
 from huggingface_hub import hf_hub_download
-
+import spaces
 
 def download_models(model_id):
     hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./")
     return f"./{model_id}"
 
-
+@spaces.GPU
 def yolov9_inference(img_path, model_id, image_size, conf_threshold, iou_threshold):
     """
     Load a YOLOv9 model, configure it, perform inference on an image, and optionally adjust 
