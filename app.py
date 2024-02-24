@@ -1,14 +1,13 @@
 import gradio as gr
 import os
-import spaces
 from huggingface_hub import hf_hub_download
 
 
 def download_models(model_id):
-    hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./")
+    hf_hub_download("merve/yolov9", filename=f"{model_id}", local_dir=f"./{model_id}")
     return f"./{model_id}"
 
-@spaces.GPU
+
 def yolov9_inference(img_path, model_id, image_size, conf_threshold, iou_threshold):
     """
     Load a YOLOv9 model, configure it, perform inference on an image, and optionally adjust 
@@ -26,7 +25,7 @@ def yolov9_inference(img_path, model_id, image_size, conf_threshold, iou_thresho
     
     # Load the model
     model_path = download_models(model_id)
-    model = yolov9.load(model_path, device="cpu")
+    model = yolov9.load(model_path, device="cuda")
     
     # Set model parameters
     model.conf = conf_threshold
@@ -99,6 +98,13 @@ def app():
                 [
                     "data/zidane.jpg",
                     "gelan-e.pt",
+                    640,
+                    0.4,
+                    0.5,
+                ],
+                [
+                    "data/huggingface.jpg",
+                    "yolov9-c.pt",
                     640,
                     0.4,
                     0.5,
