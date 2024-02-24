@@ -98,7 +98,7 @@ def app():
         gr.Examples(
             examples=[
                 [
-                    "zidane.jpg"
+                    "zidane.jpg",
                     "gelan-e.pt",
                     640,
                     0.4,
