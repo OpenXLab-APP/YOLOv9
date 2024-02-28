@@ -1,2 +1,3 @@
 yolov9pip==0.0.4
 huggingface_hub
+space
